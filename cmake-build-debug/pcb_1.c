@@ -216,28 +216,47 @@ PcbPtr deq_hrrn_Pcb(PcbPtr * queue_head_ptr, int timer) // pointer to pointer to
     PcbPtr dq_node = * queue_head_ptr;
     PcbPtr dq_prev_node = * queue_head_ptr;
 
-    if (!temp_node->next) // if we only have 1 element in queue
+    if (!temp_node->next) // if we only have 1 element in queue edge case
     {
+        *queue_head_ptr = NULL;
         return temp_node;
     }
 
-    float response_ratio = 0; // RR will be >= 1 for jobs that have arrived
-    float high_rr = 1 + (timer/temp_node->scheduled_service_time);
-    while (temp_node)
+    double response_ratio = 0; // RR will be >= 1 for jobs that have arrived
+    double  high_rr = (double) 1.0 + ((timer - temp_node->arrival_time - temp_node->scheduled_service_time
+                                       + temp_node->remaining_cpu_time )/ (double) temp_node->remaining_cpu_time);
+    while (temp_node->next != NULL) // list has more than 1 element
     {
-        response_ratio = 1 + (timer/temp_node->scheduled_service_time);
+        response_ratio = (double) 1.0 + ((timer - temp_node->arrival_time - temp_node->scheduled_service_time
+                                          + temp_node->remaining_cpu_time )/ (double) temp_node->remaining_cpu_time);
         if (response_ratio > high_rr)
         {
             high_rr = response_ratio;
-            dq_node = temp_node;
+            dq_node = temp_node; // dq_node = current_node
             dq_prev_node = temp_prev_node;
         }
         temp_prev_node = temp_node;
-        if (temp_node->next) temp_node = temp_node->next;
-        else temp_node = NULL;
+        temp_node = temp_node->next;
     }
-    dq_prev_node->next = dq_node->next;
-    dq_node->next = NULL;
+    // last node / if we only have 1 element in our list
+    response_ratio = (double) 1.0 + ((timer - temp_node->arrival_time - temp_node->scheduled_service_time
+                                      + temp_node->remaining_cpu_time )/ (double) temp_node->remaining_cpu_time);
+    if (response_ratio > high_rr) // check if last node has highest ratio
+    {
+        high_rr = response_ratio;
+        dq_node = temp_node;
+        dq_prev_node = temp_prev_node;
+    }
+    if (dq_node == *queue_head_ptr) // our highest node is our head
+    {
+        temp_node = *queue_head_ptr; // extract head
+        *queue_head_ptr = temp_node->next; // make queue head next node
+        return temp_node;
+    } else if (dq_prev_node) // our node with highest priority has a previous node (not head)
+    {
+        // V_n-1 -> V_n -> V_n+1 ==> V_n-1 -> V_n+1
+        dq_prev_node->next = dq_node->next;
+    }
     return dq_node;
 }
 

@@ -47,13 +47,13 @@
 /*** ADDITIONAL FUNCTION PROTOTYPES MAY BE ADDED HERE ***/
 /*** END OF SECTION MARKER ***/
 
-int main (int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     /*** START OF SECTION MARKER ***/
     /*** You may add variable declarations in this section. ***/
 
-    FILE * input_list_stream = NULL;
+    FILE *input_list_stream = NULL;
     PcbPtr input_queue = NULL;
+    PcbPtr hrrn_queue = NULL;
     PcbPtr current_process = NULL;
     PcbPtr process = NULL;
     int timer = 0;
@@ -65,47 +65,36 @@ int main (int argc, char *argv[])
 
 //  1. Populate the FCFS queue
 
-    if (argc == 0)
-    {
+    if (argc == 0) {
         fprintf(stderr, "FATAL: Bad arguments array\n");
-    }
-    else if (argc != 2)
-    {
+    } else if (argc != 2) {
         fprintf(stderr, "Usage: %s <TESTFILE>\n", argv[0]);
         exit(EXIT_FAILURE);
     }
 
-    if (!(input_list_stream = fopen(argv[1], "r")))
-    {
+    if (!(input_list_stream = fopen(argv[1], "r"))) {
         fprintf(stderr, "ERROR: Could not open \"%s\"\n", argv[1]);
         exit(EXIT_FAILURE);
     }
 
-    while (1)
-    {
+    while (1) {
         int val_check;
         process = createnullPcb();
         if ((val_check = fscanf(input_list_stream, "%d, %d, %d, %d",
                                 &(process->arrival_time), &(process->priority),
-                                &(process->scheduled_service_time), &(process->mbytes))) == 4)
-        {
+                                &(process->scheduled_service_time), &(process->mbytes))) == 4) {
             process->remaining_cpu_time = process->scheduled_service_time;
             process->status = PCB_INITIALIZED;
             input_queue = enqPcb(input_queue, process);
-        }
-        else if (val_check >= 0)
-        {
+        } else if (val_check >= 0) {
             free(process);
             fprintf(stderr, "ERROR: Invalid input file \"%s\"\n", argv[1]);
             exit(EXIT_FAILURE);
-        }
-        else if (ferror(input_list_stream))
-        {
+        } else if (ferror(input_list_stream)) {
             free(process);
             fprintf(stderr, "ERROR: Could not read input file \"%s\"\n", argv[1]);
             exit(EXIT_FAILURE);
-        }
-        else {
+        } else {
             free(process);
             break;
         }
@@ -118,41 +107,31 @@ int main (int argc, char *argv[])
 /*** COMMENTS THAT BEGIN WITH // ARE FOR EXERCISE 4 ONLY ***/
 /*** YOU NEED TO WRITE YOUR OWN COMMENTS ***/
 
-//  2. Whenever there is a running process or the FCFS queue is not empty:
-//    input_queue != NULL === input_queue
-    while (input_queue || current_process) // REPLACE THIS LINE WITH YOUR CODE (ONE LINE ONLY)
-    {
-//      i. If there is a currently running process;
-        if (current_process) // REPLACE THIS LINE WITH YOUR CODE (ONE LINE ONLY)
+    while (input_queue || hrrn_queue || current_process) {
+        while (input_queue && input_queue->arrival_time <= timer) // unload any ending processes from input queue
         {
-//          a. Decrement the process's remaining_cpu_time variable;
+            PcbPtr proc = deqPcb(&input_queue);
+            hrrn_queue = enqPcb(hrrn_queue, proc);
+        }
+        if (current_process) // if a process is currently running
+        {
             current_process->remaining_cpu_time--;
-//          b. If the process's allocated time has expired:
-            if (current_process->remaining_cpu_time <= 0) // REPLACE THIS LINE WITH YOUR CODE (ONE LINE ONLY)
+            if (current_process->remaining_cpu_time == 0) // if time is up
             {
-//              A. Terminate the process;
-                terminatePcb(current_process);
-//              B. Deallocate the PCB (process control block)'s memory
+                terminatePcb(current_process); // terminate
                 free(current_process);
                 current_process = NULL;
             }
         }
-
-//      ii. If there is no running process and there is a process ready to run:
-        if (current_process == NULL && timer >= input_queue->arrival_time)
+        if (!(current_process) && hrrn_queue) // if no process currently running and HRRN queue not empty
         {
-            // Dequeue the process at the head of the queue, set it as currently running and start it
-            current_process = deqPcb(&input_queue);
-            startPcb(current_process); // check for return value
+            PcbPtr tmp = deq_hrrn_Pcb(&hrrn_queue, timer);
+            startPcb(tmp);
+            current_process = tmp;
         }
-
-//      iii. Let the dispatcher sleep for one second;
         sleep(1);
-//      iv. Increment the dispatcher's timer;
         timer++;
     }
-
-//  3. Terminate the HOST dispatcher
     exit(EXIT_SUCCESS);
 }
 
