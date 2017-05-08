@@ -150,7 +150,6 @@ int main (int argc, char *argv[])
         sleep(1);
 //      iv. Increment the dispatcher's timer;
         timer++;
-//      v. Go back to 4.
     }
 
 //  3. Terminate the HOST dispatcher

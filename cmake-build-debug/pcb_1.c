@@ -205,6 +205,45 @@ PcbPtr deqPcb(PcbPtr * hPtr) // never free when de/en queueing
     return temp_head; // returning old head
 }
 
+PcbPtr deq_hrrn_Pcb(PcbPtr * queue_head_ptr, int timer) // pointer to pointer to affect data outside of function scope
+{
+    // logical errors           empty queue AND logical errors
+    if (!(queue_head_ptr) || !(*queue_head_ptr )) return NULL;
+    // keep track of ALL nodes
+    PcbPtr temp_prev_node;
+    PcbPtr temp_node = * queue_head_ptr;
+    // keep track of max nodes
+    PcbPtr dq_node = * queue_head_ptr;
+    PcbPtr dq_prev_node = * queue_head_ptr;
+
+    if (!temp_node->next) // if we only have 1 element in queue
+    {
+        return temp_node;
+    }
+
+    float response_ratio = 0; // RR will be >= 1 for jobs that have arrived
+    float high_rr = 1 + (timer/temp_node->scheduled_service_time);
+    while (temp_node)
+    {
+        response_ratio = 1 + (timer/temp_node->scheduled_service_time);
+        if (response_ratio > high_rr)
+        {
+            high_rr = response_ratio;
+            dq_node = temp_node;
+            dq_prev_node = temp_prev_node;
+        }
+        temp_prev_node = temp_node;
+        if (temp_node->next) temp_node = temp_node->next;
+        else temp_node = NULL;
+    }
+    dq_prev_node->next = dq_node->next;
+    dq_node->next = NULL;
+    return dq_node;
+}
+
+/*notes:
+ * waitpid()*/
+
 /*** START OF SECTION MARKER ***/
 /*** ADDITIONAL FUNCTION IMPLEMENTATIONS MAY BE ADDED HERE ***/
 /*** END OF SECTION MARKER ***/

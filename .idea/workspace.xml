@@ -11,7 +11,17 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d206b13b-0e45-4f1f-a815-75982d51e9c8" name="Default" comment="" />
+    <list default="true" id="d206b13b-0e45-4f1f-a815-75982d51e9c8" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/assignment_2.dir/main.c.o" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/assignment_2.dir/hostd.c.o" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/assignment_2.dir/hostd.c.o" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/assignment_2" afterPath="$PROJECT_DIR$/cmake-build-debug/assignment_2" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/fcfs.txt" afterPath="$PROJECT_DIR$/cmake-build-debug/fcfs.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/pcb_1.c" afterPath="$PROJECT_DIR$/cmake-build-debug/pcb_1.c" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hostd.c" afterPath="$PROJECT_DIR$/hostd.c" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pcb.h" afterPath="$PROJECT_DIR$/pcb.h" />
+    </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,67 +36,21 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="main.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="343">
-              <caret line="31" column="5" lean-forward="true" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
-              <folding>
-                <element signature="e#46#65#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="pcb_1.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cmake-build-debug/pcb_1.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-548">
-              <caret line="29" column="31" lean-forward="false" selection-start-line="29" selection-start-column="25" selection-end-line="29" selection-end-column="31" />
+            <state relative-caret-position="-624">
+              <caret line="170" column="27" lean-forward="true" selection-start-line="170" selection-start-column="27" selection-end-line="170" selection-end-column="27" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pcb.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pcb.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="313">
-              <caret line="58" column="13" lean-forward="false" selection-start-line="58" selection-start-column="7" selection-end-line="58" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="hostd.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/hostd.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="19" lean-forward="true" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
-              <folding>
-                <element signature="e#201#219#0" expanded="true" />
-                <element signature="e#378#393#0" expanded="true" />
-                <element signature="e#415#429#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="hostd.c" pinned="false" current-in-tab="false">
+      <file leaf-file-name="hostd.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/hostd.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="78">
-              <caret line="133" column="44" lean-forward="false" selection-start-line="133" selection-start-column="44" selection-end-line="133" selection-end-column="44" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fcfs.txt" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/cmake-build-debug/fcfs.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="11" lean-forward="false" selection-start-line="1" selection-start-column="11" selection-end-line="1" selection-end-column="11" />
+            <state relative-caret-position="310">
+              <caret line="144" column="30" lean-forward="true" selection-start-line="144" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -102,7 +66,13 @@
       <find>mem</find>
       <find>terminate</find>
       <find>current_process</find>
+      <find>deq</find>
+      <find>startPcb</find>
+      <find>deqPcb</find>
     </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -114,9 +84,11 @@
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/hostd.h" />
         <option value="$PROJECT_DIR$/main.c" />
+        <option value="$PROJECT_DIR$/cmake-build-debug/fcfs.txt" />
+        <option value="$PROJECT_DIR$/pcb.h" />
+        <option value="$PROJECT_DIR$/hrrn.txt" />
         <option value="$PROJECT_DIR$/cmake-build-debug/pcb_1.c" />
         <option value="$PROJECT_DIR$/hostd.c" />
-        <option value="$PROJECT_DIR$/cmake-build-debug/fcfs.txt" />
       </list>
     </option>
   </component>
@@ -130,6 +102,9 @@
     <option name="y" value="23" />
     <option name="width" value="1280" />
     <option name="height" value="730" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -182,7 +157,7 @@
     <property name="js.eslint.eslintPackage" value="" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
   </component>
-  <component name="RunManager" selected="Application.assignment_2 args">
+  <component name="RunManager" selected="Application.assignment_2 hrrn">
     <configuration default="true" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" PASS_PARENT_ENVS_2="true" PROJECT_NAME="assignment_2" TARGET_NAME="assignment_2" CONFIG_NAME="Debug" TEST_MODE="SUITE_TEST">
       <envs />
       <method />
@@ -352,14 +327,19 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="assignment_2 args" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="fcfs.txt" WORKING_DIR="" PASS_PARENT_ENVS_2="true" PROJECT_NAME="assignment_2" TARGET_NAME="assignment_2" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="assignment_2" RUN_TARGET_NAME="assignment_2">
+    <configuration default="false" name="assignment_2 fcfs" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="fcfs.txt" WORKING_DIR="" PASS_PARENT_ENVS_2="true" PROJECT_NAME="assignment_2" TARGET_NAME="assignment_2" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="assignment_2" RUN_TARGET_NAME="assignment_2">
       <envs />
       <method />
     </configuration>
-    <list size="3">
+    <configuration default="false" name="assignment_2 hrrn" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="hrrn.txt" WORKING_DIR="" PASS_PARENT_ENVS_2="true" PROJECT_NAME="assignment_2" TARGET_NAME="assignment_2" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="assignment_2" RUN_TARGET_NAME="assignment_2">
+      <envs />
+      <method />
+    </configuration>
+    <list size="4">
       <item index="0" class="java.lang.String" itemvalue="Application.Build All" />
       <item index="1" class="java.lang.String" itemvalue="Application.assignment_2" />
-      <item index="2" class="java.lang.String" itemvalue="Application.assignment_2 args" />
+      <item index="2" class="java.lang.String" itemvalue="Application.assignment_2 fcfs" />
+      <item index="3" class="java.lang.String" itemvalue="Application.assignment_2 hrrn" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
@@ -372,12 +352,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1494130139928</updated>
-      <workItem from="1494130143945" duration="14035000" />
+      <workItem from="1494130143945" duration="17006000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14035000" />
+    <option name="totallyTimeSpent" value="17006000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="730" extended-state="6" />
@@ -388,8 +368,8 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3857791" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24508321" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
@@ -470,16 +450,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="343">
-          <caret line="31" column="5" lean-forward="true" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
-          <folding>
-            <element signature="e#46#65#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/pcb.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-12">
@@ -490,19 +460,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pcb.h">
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/fcfs.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="58" column="13" lean-forward="false" selection-start-line="58" selection-start-column="7" selection-end-line="58" selection-end-column="13" />
+        <state relative-caret-position="60">
+          <caret line="4" column="11" lean-forward="true" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-build-debug/pcb_1.c">
+    <entry file="file://$PROJECT_DIR$/hrrn.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-548">
-          <caret line="29" column="31" lean-forward="false" selection-start-line="29" selection-start-column="25" selection-end-line="29" selection-end-column="31" />
+        <state relative-caret-position="60">
+          <caret line="4" column="11" lean-forward="false" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pcb.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="395">
+          <caret line="59" column="19" lean-forward="false" selection-start-line="59" selection-start-column="7" selection-end-line="59" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="343">
+          <caret line="31" column="5" lean-forward="true" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
+          <folding>
+            <element signature="e#46#65#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -518,18 +506,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hostd.c">
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/pcb_1.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="78">
-          <caret line="133" column="44" lean-forward="false" selection-start-line="133" selection-start-column="44" selection-end-line="133" selection-end-column="44" />
+        <state relative-caret-position="-624">
+          <caret line="170" column="27" lean-forward="true" selection-start-line="170" selection-start-column="27" selection-end-line="170" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-build-debug/fcfs.txt">
+    <entry file="file://$PROJECT_DIR$/hostd.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="11" lean-forward="false" selection-start-line="1" selection-start-column="11" selection-end-line="1" selection-end-column="11" />
+        <state relative-caret-position="310">
+          <caret line="144" column="30" lean-forward="true" selection-start-line="144" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
           <folding />
         </state>
       </provider>

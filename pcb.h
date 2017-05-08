@@ -57,6 +57,7 @@ void   printPcbHdr(void);
 PcbPtr createnullPcb();
 PcbPtr enqPcb(PcbPtr, PcbPtr);
 PcbPtr deqPcb(PcbPtr*);
+PcbPtr deq_hrrn_Pcb(PcbPtr*, int);
 
 #endif
 
