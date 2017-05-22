@@ -61,7 +61,10 @@ PcbPtr suspendPcb(PcbPtr p)
     }
     else
     {
-        return NULL; /*** REPLACE THIS LINE WITH YOUR CODE ***/
+        int kill_rv = kill(p->pid, SIGTSTP);
+        if (!kill_rv)
+            return p;
+        else return NULL; /*** REPLACE THIS LINE WITH YOUR CODE ***/
     }
 }
 
@@ -81,7 +84,11 @@ PcbPtr terminatePcb(PcbPtr p)
     }
     else
     {
-        return NULL; /*** REPLACE THIS LINE WITH YOUR CODE ***/
+        // kill return value
+        int kill_rv = kill(p->pid, SIGINT);
+        if (!kill_rv) // returning 0 means that kill worked
+            return p;
+        else return NULL;
     }
 }
 
@@ -153,6 +160,7 @@ PcbPtr createnullPcb()
     new_process_Ptr->pid = 0;
     new_process_Ptr->args[0] = "./process";
     new_process_Ptr->args[1] = NULL;
+    new_process_Ptr->time_quantum = 0;
     new_process_Ptr->arrival_time = 0;
     new_process_Ptr->priority = 0;
     new_process_Ptr->remaining_cpu_time = 0;
@@ -200,6 +208,80 @@ PcbPtr deqPcb(PcbPtr * hPtr) // never free when de/en queueing
     temp_head->next = NULL; // sever old head
     return temp_head; // returning old head
 }
+
+PcbPtr deq_hrrn_Pcb(PcbPtr * queue_head_ptr, int timer) // pointer to pointer to affect data outside of function scope
+{
+    // logical errors           empty queue AND logical errors
+    if (!(queue_head_ptr) || !(*queue_head_ptr )) return NULL;
+    // keep track of ALL nodes
+    PcbPtr temp_prev_node;
+    PcbPtr temp_node = * queue_head_ptr;
+    // keep track of max nodes
+    PcbPtr dq_node = * queue_head_ptr;
+    PcbPtr dq_prev_node = * queue_head_ptr;
+
+    if (!temp_node->next) // if we only have 1 element in queue edge case
+    {
+        *queue_head_ptr = NULL;
+        return temp_node;
+    }
+
+    /* response ratio = 1 + (time job has spent waiting/the service time)
+     * time job has spent waiting = time elapsed since dispatcher started - time of job's arrival
+     *                              - (job's total service time - remaining service time needed to finish job)
+     * */
+    double  high_rr = (double) 1.0 + ((timer - temp_node->arrival_time - temp_node->scheduled_service_time
+                                       + temp_node->remaining_cpu_time )/ (double) temp_node->remaining_cpu_time);
+    double response_ratio = 0; // RR will be >= 1 for jobs that have arrived
+
+    while (temp_node->next != NULL) // list has more than 1 element
+    {
+        response_ratio = (double) 1.0 + ((timer - temp_node->arrival_time - temp_node->scheduled_service_time
+                                          + temp_node->remaining_cpu_time )/ (double) temp_node->remaining_cpu_time);
+        if (response_ratio > high_rr)
+        {
+            high_rr = response_ratio;
+            dq_node = temp_node; // dq_node = current_node
+            dq_prev_node = temp_prev_node;
+        }
+        temp_prev_node = temp_node;
+        temp_node = temp_node->next;
+    }
+    // last node / if we only have 1 element in our list
+    response_ratio = (double) 1.0 + ((timer - temp_node->arrival_time - temp_node->scheduled_service_time
+                                      + temp_node->remaining_cpu_time )/ (double) temp_node->remaining_cpu_time);
+    if (response_ratio > high_rr) // check if last node has highest ratio
+    {
+        high_rr = response_ratio;
+        dq_node = temp_node;
+        dq_prev_node = temp_prev_node;
+    }
+    if (dq_node == *queue_head_ptr) // our highest node is our head
+    {
+        temp_node = *queue_head_ptr; // extract head
+        *queue_head_ptr = temp_node->next; // make queue head next node
+        return temp_node;
+    } else if (dq_prev_node) // our node with highest priority has a previous node (not head)
+    {
+        // V_n-1 -> V_n -> V_n+1 ==> V_n-1 -> V_n+1
+        dq_prev_node->next = dq_node->next;
+    }
+    return dq_node;
+}
+
+PcbPtr enqPcb_hd(PcbPtr headofQ, PcbPtr process)
+{
+    if (!process) return NULL;
+    if (headofQ)
+    {
+        // set new head to process, and tail to headofQ
+        process->next = headofQ;
+    }
+    return process;
+}
+
+/*notes:
+ * waitpid()*/
 
 /*** START OF SECTION MARKER ***/
 /*** ADDITIONAL FUNCTION IMPLEMENTATIONS MAY BE ADDED HERE ***/

@@ -37,6 +37,7 @@ struct pcb {
     char * args[3];
     int arrival_time;
     int priority;
+    int time_quantum;
     int remaining_cpu_time;
     int scheduled_service_time;
     int mbytes;
@@ -57,6 +58,8 @@ void   printPcbHdr(void);
 PcbPtr createnullPcb();
 PcbPtr enqPcb(PcbPtr, PcbPtr);
 PcbPtr deqPcb(PcbPtr*);
+PcbPtr deq_hrrn_Pcb(PcbPtr*, int);
+PcbPtr enqPcb_hd(PcbPtr , PcbPtr );
 
 #endif
 

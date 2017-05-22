@@ -61,7 +61,10 @@ PcbPtr suspendPcb(PcbPtr p)
     }
     else
     {
-        return NULL; /*** REPLACE THIS LINE WITH YOUR CODE ***/
+        int kill_rv = kill(p->pid, SIGTSTP);
+        if (!kill_rv)
+            return p;
+        else return NULL; /*** REPLACE THIS LINE WITH YOUR CODE ***/
     }
 }
 
@@ -157,6 +160,7 @@ PcbPtr createnullPcb()
     new_process_Ptr->pid = 0;
     new_process_Ptr->args[0] = "./process";
     new_process_Ptr->args[1] = NULL;
+    new_process_Ptr->time_quantum = 0;
     new_process_Ptr->arrival_time = 0;
     new_process_Ptr->priority = 0;
     new_process_Ptr->remaining_cpu_time = 0;
@@ -222,9 +226,14 @@ PcbPtr deq_hrrn_Pcb(PcbPtr * queue_head_ptr, int timer) // pointer to pointer to
         return temp_node;
     }
 
-    double response_ratio = 0; // RR will be >= 1 for jobs that have arrived
+    /* response ratio = 1 + (time job has spent waiting/the service time)
+     * time job has spent waiting = time elapsed since dispatcher started - time of job's arrival
+     *                              - (job's total service time - remaining service time needed to finish job)
+     * */
     double  high_rr = (double) 1.0 + ((timer - temp_node->arrival_time - temp_node->scheduled_service_time
                                        + temp_node->remaining_cpu_time )/ (double) temp_node->remaining_cpu_time);
+    double response_ratio = 0; // RR will be >= 1 for jobs that have arrived
+
     while (temp_node->next != NULL) // list has more than 1 element
     {
         response_ratio = (double) 1.0 + ((timer - temp_node->arrival_time - temp_node->scheduled_service_time
@@ -258,6 +267,17 @@ PcbPtr deq_hrrn_Pcb(PcbPtr * queue_head_ptr, int timer) // pointer to pointer to
         dq_prev_node->next = dq_node->next;
     }
     return dq_node;
+}
+
+PcbPtr enqPcb_hd(PcbPtr headofQ, PcbPtr process)
+{
+    if (!process) return NULL;
+    if (headofQ)
+    {
+        // set new head to process, and tail to headofQ
+        process->next = headofQ;
+    }
+    return process;
 }
 
 /*notes:
