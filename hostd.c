@@ -42,7 +42,7 @@
 
 /* Include files */
 #include "hostd.h"
-#include "cmake-build-debug/pcb.h"
+#include "pcb.h"
 
 /*** START OF SECTION MARKER ***/
 /*** ADDITIONAL FUNCTION PROTOTYPES MAY BE ADDED HERE ***/
@@ -53,12 +53,11 @@ int main(int argc, char *argv[]) {
     /*** You may add variable declarations in this section. ***/
 
     FILE *input_list_stream = NULL;
-
+    // initialise dispatcher queues
     PcbPtr input_queue = NULL;
-    PcbPtr hrrn_queue = NULL;
+    PcbPtr hrrn_queue = NULL; // hrrn queue = priority 3 feedback queue
     PcbPtr fb_queue_p1 = NULL;
     PcbPtr fb_queue_p2 = NULL;
-    PcbPtr fb_queue_p3 = NULL;
     PcbPtr current_process = NULL;
     PcbPtr process = NULL;
     int timer = 0;
@@ -112,14 +111,23 @@ int main(int argc, char *argv[]) {
 /*** COMMENTS THAT BEGIN WITH // ARE FOR EXERCISE 4 ONLY ***/
 /*** YOU NEED TO WRITE YOUR OWN COMMENTS ***/
 
-    while (input_queue || hrrn_queue || fb_queue_p1 || fb_queue_p2 || fb_queue_p3 || current_process) {
+    while (input_queue || hrrn_queue || fb_queue_p1 || fb_queue_p2 || current_process) {
+        // unload pending process from the input queue?
         while (input_queue && input_queue->arrival_time <= timer) // unload any pending processes from input queue
         {
             // Dequeue process from input queue
             PcbPtr proc = deqPcb(&input_queue);
-            // enqueue on the appropriate feedback queue
-            // (assigning it the appropriate priority and time quantum)
-            hrrn_queue = enqPcb(hrrn_queue, proc);
+            int proc_priority = proc->priority;
+            if (proc_priority == 1){
+                // assign appropriate priority and quantu
+                proc->time_quantum = 1;
+                fb_queue_p1 = enqPcb(fb_queue_p1, proc);
+            } else if (proc_priority == 2) {
+                proc->time_quantum = 3;
+                fb_queue_p2 = enqPcb(fb_queue_p2, proc);
+            } else if (proc_priority == 3) {
+                hrrn_queue = enqPcb_hd(hrrn_queue, proc);
+            }
         }
         if (current_process) // if a process is currently running
         {
@@ -134,10 +142,11 @@ int main(int argc, char *argv[]) {
             else if (current_process->priority == 1)
             {
                 current_process->priority = 2;
-                if (fb_queue_p1 || fb_queue_p2 || fb_queue_p3)
+                current_process->time_quantum = 3;
+                if (fb_queue_p1 || fb_queue_p2 )
                 {
                     suspendPcb(current_process);
-                    enqPcb(fb_queue_p2, current_process);
+                    fb_queue_p2 = enqPcb(fb_queue_p2, current_process);
                     current_process = NULL;
                 }
 
@@ -147,31 +156,39 @@ int main(int argc, char *argv[]) {
                 if (current_process->time_quantum == 0)
                 {
                     current_process->priority = 3;
-                    if (fb_queue_p1 || fb_queue_p2 || fb_queue_p3)
+                    if (fb_queue_p1 || fb_queue_p2 || hrrn_queue)
                     {
                         suspendPcb(current_process);
-                        enqPcb(fb_queue_p3, current_process);
+                        hrrn_queue = enqPcb(hrrn_queue, current_process);
                         current_process = NULL;
                     }
                 } else if (fb_queue_p1)
                 {
+                    // higher level priority queue = fb1 queue
                     suspendPcb(current_process);
-                    enqPcb_hd(fb_queue_p2, current_process);
+                    fb_queue_p2 = enqPcb_hd(fb_queue_p2, current_process);
                     current_process = NULL;
                 }
-            } else if ( fb_queue_p1 || fb_queue_p2 || fb_queue_p3)
+            } else if ( fb_queue_p1 || fb_queue_p2 )
             {
                 suspendPcb(current_process);
-                enqPcb(fb_queue_p3, current_process);
+                hrrn_queue = (hrrn_queue, current_process);
                 current_process = NULL;
             }
         }
-        if (!(current_process) && (fb_queue_p1 && fb_queue_p2 && fb_queue_p3)) // if no process currently running and HRRN queue not empty
+        if (!(current_process) && (fb_queue_p1 || fb_queue_p2 || hrrn_queue)) // if no process currently running and HRRN queue not empty
         {
-            // lost at step iii. a.
-            PcbPtr tmp = deq_hrrn_Pcb(&hrrn_queue, timer);
-            startPcb(tmp);
-            current_process = tmp;
+            if (fb_queue_p1 || fb_queue_p2)
+            {
+                if (fb_queue_p1) {
+                    current_process = deqPcb(&fb_queue_p1);
+                } else if (fb_queue_p2) {
+                    current_process = deqPcb(&fb_queue_p2);
+                }
+            } else {
+                current_process = deq_hrrn_Pcb(&hrrn_queue, timer);
+            }
+            startPcb(current_process);
         }
         sleep(1);
         timer++;

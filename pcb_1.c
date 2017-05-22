@@ -271,11 +271,12 @@ PcbPtr deq_hrrn_Pcb(PcbPtr * queue_head_ptr, int timer) // pointer to pointer to
 
 PcbPtr enqPcb_hd(PcbPtr headofQ, PcbPtr process)
 {
+//    if (process->next) return NULL;
     if (!process) return NULL;
     if (headofQ)
     {
         // set new head to process, and tail to headofQ
-        process->next = headofQ;
+        process->next = headofQ; // make sure process->next is null
     }
     return process;
 }
