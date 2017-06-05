@@ -62,6 +62,7 @@ PcbPtr suspendPcb(PcbPtr p)
     else
     {
         int kill_rv = kill(p->pid, SIGTSTP);
+        waitpid(p->pid, NULL, WUNTRACED);
         if (!kill_rv)
             return p;
         else return NULL; /*** REPLACE THIS LINE WITH YOUR CODE ***/
@@ -86,6 +87,7 @@ PcbPtr terminatePcb(PcbPtr p)
     {
         // kill return value
         int kill_rv = kill(p->pid, SIGINT);
+        waitpid(p->pid, NULL, WUNTRACED);
         if (!kill_rv) // returning 0 means that kill worked
             return p;
         else return NULL;
